@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .container{
+        align-items: center;
+        flex-direction: column;
+        display: flex;
+        margin-top: 30vh;
+        gap: 2rem;
+    }
+    .container h1{
+        color: blue;
+    }
+
+    .timer{
+        display: flex;
+        font-size: 55px;
+        font-weight: bold;
+        color: rgb(52, 56, 61);
+    }
+    .time{
+        display: flex;
+        min-width: 50px;
+        max-width: 50px;
+    }
+    #separador{
+        padding: 0 5px;
+        margin-left: 40px;
+    }
+
+    #milliSeconds{
+        font-size: 50px;
+        color: rgba(79, 84, 90, 0.589);
+        
+    }
+
+    .button{
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn{
+        font-size: 20px;
+        padding: 5px 10px;
+        transition: all 0.05s ease-in-out;
+    }
+    #iniciar{
+        background-color: blue;
+        color: white;
+        border-radius: 15px;
+    }
+
+    .btn:hover{
+        transform: scale(1.1);
+    }
+    #pausar, #continuar{
+        display: none;
+    }
+
+</style>
+<body>
+    
+    <div class="container" >
+        <h1>CRONÔMETRO</h1>
+
+        <div class="timer">
+            <div class="time" id="minutes">00</div>
+            <div class="time" id="separador">:</div>
+            <div class="time" id="seconds">00</div>
+            <div class="time" id="separador">:</div>
+            <div class="time" id="milliSeconds">000</div>
+        </div>
+        <div class="button">
+            <button class="btn" id="iniciar" onclick="clicarIniciar()">Iniciar</button>
+            <button class="btn" id="pausar" onclick="clicarPausar()" >Pausar</button>
+            <button class="btn" id="resetar" onclick="clicarResetar()">Resetar</button>
+        </div>
+    </div>
+
+    <script>
+        
+        //Pega os botões
+
+        const iniciar = document.querySelector('#iniciar');
+        const pausar = document.querySelector('#pausar');
+        const resetar = document.querySelector('#resetar')
+
+        //--------------------------------------------------------------
+
+        //Pega os números do cronômetro
+        
+        const minuto = document.querySelector('#minutes');
+        const segundo = document.querySelector('#seconds');
+        const milesimo = document.querySelector('#milliSeconds');
+
+        //---------------------------------------------------------------//
+        
+        let interval;
+        let minutos = 0;
+        let segundos = 0;
+        let milesimos = 0;
+        let pausado = 2;
+
+        //--------------------------FUNÇÕES UTILIZADAS-------------------------------------//
+
+        function clicarIniciar(){
+            
+            if (pausado != 1) {
+                pausado = 1
+            }
+
+            pausar.style.display = 'flex'
+
+        };
+
+        function clicarPausar(){
+            pausado = 2
+        };
+
+        function clicarResetar(){
+            milesimos = 0;
+            segundos = 0;
+            minutos = 0;
+            pausado = 2;
+
+            minuto.innerHTML = '00';
+            segundo.innerHTML = '00';
+            milesimo.innerHTML = '000';
+        };
+
+        //-------------------------------------------------------------------------------------//
+        
+        
+        interval = setInterval(()=>{
+
+            if (pausado == 1){
+                if (milesimos < 100){
+
+                    milesimos ++
+                    milesimo.innerHTML = milesimos
+
+                    if (milesimos == 100){
+                        segundos++
+                        segundo.innerHTML = segundos
+                        milesimos = 0
+
+                        if (segundos == 60){
+                            minutos++
+                            minuto.innerHTML = minutos
+                            segundos = 0
+                        }
+                        
+                    }
+
+                }
+            }    
+        },10)
+
+
+
+            
+
+            
+
+            
+
+        
+
+                
+
+    </script>
+</body>
+</html>
